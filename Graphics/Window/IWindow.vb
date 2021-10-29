@@ -3,16 +3,16 @@ Imports System.Collections.Generic
 
 Namespace Graphics
 
-    Interface IWindow
+    Public Interface IWindow
         Inherits IDisposable
 
-        ReadOnly Property Title As String
-        ReadOnly Property X As Integer
-        ReadOnly Property Y As Integer
-        ReadOnly Property Width As Integer
-        ReadOnly Property Height As Integer
-        ReadOnly Property Flags As IEnumerable(Of WindowFlags)
-        ReadOnly Property Handle As IntPtr
+        Property Title As String
+        Property X As Integer
+        Property Y As Integer
+        Property Width As Integer
+        Property Height As Integer
+        Property Flags As IEnumerable(Of WindowFlags)
+        Property Handle As IntPtr
     End Interface
 
 End Namespace
