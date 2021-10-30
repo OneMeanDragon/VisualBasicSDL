@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Namespace Graphics
-    Interface ITrueTypeText
+    Public Interface ITrueTypeText
         Inherits IDisposable
 
         Property Text As String
