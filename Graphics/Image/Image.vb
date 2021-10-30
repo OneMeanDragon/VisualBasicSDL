@@ -9,11 +9,11 @@ Namespace VisualBasicSDL.Graphics
 
         Public Sub New(ByVal vRenderer As IRenderer, ByVal vSurface As ISurface, ByVal vImageFormat As ImageFormat)
             If vRenderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(Renderer))
+                Throw New ArgumentNullException(NameOf(vRenderer))
             End If
 
             If vSurface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(Surface))
+                Throw New ArgumentNullException(NameOf(vSurface))
             End If
 
             If vSurface.Type = SurfaceType.Text Then
