@@ -5,32 +5,32 @@ Namespace VisualBasicSDL.Graphics
 
         Private disposedValue As Boolean
         Public Property Format As ImageFormat
-        Public Property Texture As ITexture
+        Public Property [Texture] As ITexture
 
-        Public Sub New(ByVal renderer As IRenderer, ByVal surface As ISurface, ByVal imageFormat As ImageFormat)
-            If renderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(renderer))
+        Public Sub New(ByVal vRenderer As IRenderer, ByVal vSurface As ISurface, ByVal vImageFormat As ImageFormat)
+            If vRenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(Renderer))
             End If
 
-            If surface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(surface))
+            If vSurface Is Nothing Then
+                Throw New ArgumentNullException(NameOf(Surface))
             End If
 
-            If surface.Type = SurfaceType.Text Then
+            If vSurface.Type = SurfaceType.Text Then
                 Throw New InvalidOperationException("Cannot create images from text surfaces.")
             End If
 
-            Format = imageFormat
+            Format = vImageFormat
 
-            If surface.Type = SurfaceType.BMP Then
-                Format = imageFormat.BMP
-            ElseIf surface.Type = SurfaceType.PNG Then
-                Format = imageFormat.PNG
-            ElseIf surface.Type = SurfaceType.JPG Then
-                Format = imageFormat.JPG
+            If vSurface.Type = SurfaceType.BMP Then
+                Format = ImageFormat.BMP
+            ElseIf vSurface.Type = SurfaceType.PNG Then
+                Format = ImageFormat.PNG
+            ElseIf vSurface.Type = SurfaceType.JPG Then
+                Format = ImageFormat.JPG
             End If
 
-            Texture = New Texture(renderer, surface)
+            [Texture] = New Texture(vRenderer, vSurface)
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
