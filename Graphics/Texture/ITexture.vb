@@ -1,7 +1,7 @@
 ﻿Imports System
 
 Namespace Graphics
-    Interface ITexture
+    Public Interface ITexture
         Inherits IDisposable
 
         Property Width As Integer

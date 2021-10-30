@@ -1,7 +1,7 @@
 ﻿Imports System.Collections.Generic
 
 Namespace Graphics
-    Interface IRenderer
+    Public Interface IRenderer
         Inherits IDisposable
 
         Property Window As IWindow
