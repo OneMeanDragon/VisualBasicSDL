@@ -22,48 +22,50 @@ Namespace VisualBasicSDL.Graphics
         Public Property IsWrapped As Boolean Implements ITrueTypeText.IsWrapped
         Public Property WrapLength As Integer Implements ITrueTypeText.WrapLength
 
-        Public Sub New(ByVal renderer As IRenderer, ByVal surface As ISurface, ByVal text As String, ByVal font As Font, ByVal color As SDLColor, ByVal wrapLength As Integer)
-            If renderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(renderer))
+        Public Sub New(ByVal vrenderer As IRenderer, ByVal vsurface As ISurface,
+                       ByVal vtext As String, ByVal vfont As Font,
+                       ByVal vcolor As SDLColor, ByVal vwrapLength As Integer)
+            If vrenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vrenderer))
             End If
 
-            If surface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(surface))
+            If vsurface Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vsurface))
             End If
 
-            If text Is Nothing Then
-                Throw New ArgumentNullException(NameOf(text))
+            If vtext Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vtext))
             End If
 
-            If font Is Nothing Then
-                Throw New ArgumentNullException(NameOf(font))
+            If vfont Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vfont))
             End If
 
-            If wrapLength < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(wrapLength), "Wrap length must be greater than or equal to 0.")
+            If vwrapLength < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vwrapLength), "Wrap length must be greater than or equal to 0.")
             End If
 
-            Texture = New Texture(renderer, surface)
-            IsWrapped = wrapLength > 0
-            text = text
-            font = font
-            color = color
-            wrapLength = wrapLength
+            Texture = New Texture(vrenderer, vsurface)
+            IsWrapped = vwrapLength > 0
+            Text = vtext
+            Font = vfont
+            Color = vcolor
+            WrapLength = vwrapLength
         End Sub
 
-        Public Sub UpdateText(ByVal text As String) Implements ITrueTypeText.UpdateText
-            UpdateText(text, 0)
+        Public Sub UpdateText(ByVal vtext As String) Implements ITrueTypeText.UpdateText
+            UpdateText(vtext, 0)
         End Sub
 
-        Public Sub UpdateText(ByVal text As String, ByVal wrapLength As Integer) Implements ITrueTypeText.UpdateText
+        Public Sub UpdateText(ByVal vtext As String, ByVal vwrapLength As Integer) Implements ITrueTypeText.UpdateText
             If Texture Is Nothing Then
                 Throw New InvalidOperationException("Texture is null. Has it been disposed?")
             End If
 
-            Dim surface As ISurface = New Surface(Font, text, Color, wrapLength)
+            Dim surface As ISurface = New Surface(Font, vtext, Color, vwrapLength)
             Texture.UpdateSurfaceAndTexture(surface)
-            text = text
-            IsWrapped = wrapLength > 0
+            Text = vtext
+            IsWrapped = vwrapLength > 0
         End Sub
 
         Public Sub SetOutlineSize(ByVal outlineSize As Integer) Implements ITrueTypeText.SetOutlineSize
