@@ -2,7 +2,7 @@
 Imports SDL2
 Imports System.Collections.Generic
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class Window
         Implements IWindow
 

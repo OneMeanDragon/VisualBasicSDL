@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports Microsoft.Extensions.Logging
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class WindowFactory
         Implements IWindowFactory
 

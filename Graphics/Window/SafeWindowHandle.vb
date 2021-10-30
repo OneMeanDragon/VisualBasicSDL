@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Win32.SafeHandles
 Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Friend Class SafeWindowHandle
         Inherits SafeHandleZeroOrMinusOneIsInvalid
 

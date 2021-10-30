@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.Win32.SafeHandles
 Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Friend Class SafeFontHandle : Inherits SafeHandleZeroOrMinusOneIsInvalid
         Public Sub New(handle As IntPtr)

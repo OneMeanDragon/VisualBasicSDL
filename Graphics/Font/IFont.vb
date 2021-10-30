@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Interface IFont : Inherits IDisposable
         Property FilePath As String

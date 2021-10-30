@@ -1,6 +1,6 @@
 ﻿Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Class Font : Implements IFont
         Private mSafeHandle As SafeFontHandle = Nothing

@@ -1,6 +1,6 @@
 ﻿Imports VisualBasicSDL.[Shared]
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     'Suppose this could have been a Structure at this point.
     Public Class Primitive
         Public Shared Sub DrawLine(ByVal renderer As IRenderer, ByVal x1 As Integer, ByVal y1 As Integer, ByVal x2 As Integer, ByVal y2 As Integer)

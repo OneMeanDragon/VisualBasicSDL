@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class Image
         Implements IDisposable
 
@@ -23,11 +23,11 @@ Namespace Graphics
             Format = imageFormat
 
             If surface.Type = SurfaceType.BMP Then
-                Format = ImageFormat.BMP
+                Format = imageFormat.BMP
             ElseIf surface.Type = SurfaceType.PNG Then
-                Format = ImageFormat.PNG
+                Format = imageFormat.PNG
             ElseIf surface.Type = SurfaceType.JPG Then
-                Format = ImageFormat.JPG
+                Format = imageFormat.JPG
             End If
 
             Texture = New Texture(renderer, surface)

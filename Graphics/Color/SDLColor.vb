@@ -1,6 +1,6 @@
 ﻿Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Structure Colors
         Private Shared mBlack As SDLColor
         Private Shared mWhite As SDLColor

@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Interface ITrueTypeText
         Inherits IDisposable
 

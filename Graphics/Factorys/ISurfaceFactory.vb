@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Interface ISurfaceFactory
 

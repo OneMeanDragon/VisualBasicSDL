@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Structure Rectangle
         Public Property X As Integer
         Public Property Y As Integer

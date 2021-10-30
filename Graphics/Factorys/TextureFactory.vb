@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Extensions.Logging
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class TextureFactory
         Implements ITextureFactory
 

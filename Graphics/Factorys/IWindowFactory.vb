@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Interface IWindowFactory
         Function CreateWindow(ByVal title As String) As IWindow

@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Interface IWindow
         Inherits IDisposable

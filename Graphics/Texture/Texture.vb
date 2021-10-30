@@ -1,7 +1,7 @@
 ﻿Imports SDL2
 Imports VisualBasicSDL.Shared 'Root Namespace = ""
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class Texture
         Implements ITexture
 

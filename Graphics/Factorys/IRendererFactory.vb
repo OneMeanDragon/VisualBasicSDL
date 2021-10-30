@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Interface IRendererFactory
         Function CreateRenderer(ByVal window As IWindow) As IRenderer
         Function CreateRenderer(ByVal window As IWindow, ByVal index As Integer) As IRenderer

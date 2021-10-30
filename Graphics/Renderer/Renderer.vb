@@ -3,7 +3,7 @@ Imports SDL2
 Imports VisualBasicSDL.[Shared]
 Imports System.Collections.Generic
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class Renderer
         Implements IRenderer
 

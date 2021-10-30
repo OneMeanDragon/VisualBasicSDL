@@ -1,4 +1,4 @@
-﻿Namespace Graphics
+﻿Namespace VisualBasicSDL.Graphics
     Public Class Point
         Public Property X As Integer
         Public Property Y As Integer

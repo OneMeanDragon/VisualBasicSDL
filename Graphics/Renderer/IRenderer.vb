@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Interface IRenderer
         Inherits IDisposable
 

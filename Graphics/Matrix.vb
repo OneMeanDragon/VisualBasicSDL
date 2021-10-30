@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Structure Matrix
         Public Property Row1Col1 As Single

@@ -2,7 +2,7 @@
 Imports System
 Imports System.Runtime.InteropServices
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Class Surface : Implements ISurface
 

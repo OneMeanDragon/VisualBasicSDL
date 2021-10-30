@@ -1,6 +1,6 @@
 ﻿Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Enum TextureAccessMode As Integer
         [Static] = SDL.SDL_TextureAccess.SDL_TEXTUREACCESS_STATIC
         Streaming = SDL.SDL_TextureAccess.SDL_TEXTUREACCESS_STREAMING

@@ -1,5 +1,5 @@
 ﻿
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Interface ISurface : Inherits IDisposable
         ''' <summary> Surface's content direct file path </summary>

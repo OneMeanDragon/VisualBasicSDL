@@ -1,6 +1,6 @@
 ﻿Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     <Flags>
     Public Enum RendererFlags As UInteger
         None = 0

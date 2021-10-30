@@ -1,7 +1,7 @@
 ﻿Imports VisualBasicSDL.[Shared]
 Imports System
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Class TrueTypeText
         Implements ITrueTypeText
 

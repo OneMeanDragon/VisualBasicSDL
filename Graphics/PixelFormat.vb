@@ -1,6 +1,6 @@
 ﻿Imports SDL2
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
     Public Enum PixelFormat As UInteger
         Unknown
         RGBA5551

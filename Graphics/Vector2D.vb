@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace Graphics
+Namespace VisualBasicSDL.Graphics
 
     Public Class Vector2D
         Public Property X As Single
