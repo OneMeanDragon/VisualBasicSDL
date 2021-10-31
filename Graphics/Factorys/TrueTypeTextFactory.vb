@@ -18,38 +18,38 @@ Namespace VisualBasicSDL.Graphics
             Return CreateTrueTypeText(renderer, fontPath, text, fontSize, color, 0)
         End Function
 
-        Public Function CreateTrueTypeText(ByVal renderer As IRenderer, ByVal fontPath As String, ByVal text As String, ByVal fontSize As Integer, ByVal color As SDLColor, ByVal wrapLength As Integer) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
-            Dim font As Font = Nothing
-            Dim surface As ISurface = Nothing
-            Dim trueTypeText As ITrueTypeText = Nothing
+        Public Function CreateTrueTypeText(ByVal vRenderer As IRenderer, ByVal vFontPath As String, ByVal vText As String, ByVal vFontSize As Integer, ByVal vColor As SDLColor, ByVal vWrapLength As Integer) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
+            Dim locFont As Font = Nothing
+            Dim locSurface As ISurface = Nothing
+            Dim locTrueTypeText As ITrueTypeText = Nothing
 
-            If renderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(renderer))
+            If vRenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vRenderer))
             End If
 
-            If String.IsNullOrWhiteSpace(fontPath) Then
-                Throw New ArgumentNullException(NameOf(fontPath))
+            If String.IsNullOrWhiteSpace(vFontPath) Then
+                Throw New ArgumentNullException(NameOf(vFontPath))
             End If
 
-            If fontSize <= 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(fontSize), "Font size must be greater than 0.")
+            If vFontSize <= 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vFontSize), "Font size must be greater than 0.")
             End If
 
-            If text Is Nothing Then
-                Throw New ArgumentNullException(NameOf(text))
+            If vText Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vText))
             End If
 
             Try
-                font = New Font(fontPath, fontSize)
-                surface = New Surface(font, text, color, wrapLength)
-                trueTypeText = New TrueTypeText(renderer, surface, text, font, color, wrapLength)
-                logger?.LogTrace($"TrueTypeText created. Width = {trueTypeText.Texture.Width}, Height = {trueTypeText.Texture.Height}, Font = {trueTypeText.Font.FilePath}, WrapLength = {trueTypeText.WrapLength}.")
-                Return trueTypeText
+                locFont = New Font(vFontPath, vFontSize)
+                locSurface = New Surface(locFont, vText, vColor, vWrapLength)
+                locTrueTypeText = New TrueTypeText(vRenderer, locSurface, vText, locFont, vColor, vWrapLength)
+                logger?.LogTrace($"TrueTypeText created. Width = {locTrueTypeText.Texture.Width}, Height = {locTrueTypeText.Texture.Height}, Font = {locTrueTypeText.Font.FilePath}, WrapLength = {locTrueTypeText.WrapLength}.")
+                Return locTrueTypeText
             Catch ex As Exception
                 logger.LogError(ex, "Error occurred while creating a TrueTypeText object.")
-                font.Dispose()
-                surface.Dispose()
-                trueTypeText.Dispose()
+                locFont.Dispose()
+                locSurface.Dispose()
+                locTrueTypeText.Dispose()
                 Throw
             End Try
         End Function

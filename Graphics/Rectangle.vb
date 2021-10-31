@@ -54,54 +54,54 @@ Namespace VisualBasicSDL.Graphics
             End Get
         End Property
 
-        Public Sub New(ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer)
+        Public Sub New(ByVal vX As Integer, ByVal vY As Integer, ByVal vWidth As Integer, ByVal vHeight As Integer)
             Me.New()
 
-            If width < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(width), "Width must be greater than or equal to 0.")
+            If vWidth < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vWidth), "Width must be greater than or equal to 0.")
             End If
 
-            If height < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(height), "Height must be greater than or equal to 0.")
+            If vHeight < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vHeight), "Height must be greater than or equal to 0.")
             End If
 
-            x = x
-            y = y
-            width = width
-            height = height
+            X = vX
+            Y = vY
+            Width = vWidth
+            Height = vHeight
         End Sub
 
-        Public Function Contains(ByVal point As Point) As Boolean
-            Return (Left <= point.X) AndAlso (Right >= point.X) AndAlso (Top <= point.Y) AndAlso (Bottom >= point.Y)
+        Public Function Contains(ByVal vPoint As Point) As Boolean
+            Return (Left <= vPoint.X) AndAlso (Right >= vPoint.X) AndAlso (Top <= vPoint.Y) AndAlso (Bottom >= vPoint.Y)
         End Function
 
-        Public Function Contains(ByVal rectangle As Rectangle) As Boolean
-            Return (Left <= rectangle.Left) AndAlso (Right >= rectangle.Right) AndAlso (Top <= rectangle.Top) AndAlso (Bottom >= rectangle.Bottom)
+        Public Function Contains(ByVal vRectangle As Rectangle) As Boolean
+            Return (Left <= vRectangle.Left) AndAlso (Right >= vRectangle.Right) AndAlso (Top <= vRectangle.Top) AndAlso (Bottom >= vRectangle.Bottom)
         End Function
 
-        Public Function Contains(ByVal vector As Vector2D) As Boolean
-            Return (Left <= vector.X) AndAlso (Right >= vector.X) AndAlso (Top <= vector.Y) AndAlso (Bottom >= vector.Y)
+        Public Function Contains(ByVal vVector As Vector2D) As Boolean
+            Return (Left <= vVector.X) AndAlso (Right >= vVector.X) AndAlso (Top <= vVector.Y) AndAlso (Bottom >= vVector.Y)
         End Function
 
-        Public Function Intersects(ByVal rectangle As Rectangle) As Boolean
-            Return (rectangle.Left <= Right) AndAlso (Left <= rectangle.Right) AndAlso (rectangle.Top <= Bottom) AndAlso (Top <= rectangle.Bottom)
+        Public Function Intersects(ByVal vRectangle As Rectangle) As Boolean
+            Return (vRectangle.Left <= Right) AndAlso (Left <= vRectangle.Right) AndAlso (vRectangle.Top <= Bottom) AndAlso (Top <= vRectangle.Bottom)
         End Function
 
-        Public Function GetIntersectionDepth(ByVal rectangle As Rectangle) As Vector2D
-            Dim halfWidthA As Single = Me.Width / 2.0F
-            Dim halfHeightA As Single = Me.Height / 2.0F
-            Dim halfWidthB As Single = rectangle.Width / 2.0F
-            Dim halfHeightB As Single = rectangle.Height / 2.0F
-            Dim centerA As Vector2D = New Vector2D(Me.Left + halfWidthA, Me.Top + halfHeightA)
-            Dim centerB As Vector2D = New Vector2D(rectangle.Left + halfWidthB, rectangle.Top + halfHeightB)
-            Dim distanceX As Single = centerA.X - centerB.X
-            Dim distanceY As Single = centerA.Y - centerB.Y
-            Dim minDistanceX As Single = halfWidthA + halfWidthB
-            Dim minDistanceY As Single = halfHeightA + halfHeightB
-            If Math.Abs(distanceX) >= minDistanceX OrElse Math.Abs(distanceY) >= minDistanceY Then Return Vector2D.Zero
-            Dim depthX As Single = If(distanceX > 0, minDistanceX - distanceX, -minDistanceX - distanceX)
-            Dim depthY As Single = If(distanceY > 0, minDistanceY - distanceY, -minDistanceY - distanceY)
-            Return New Vector2D(depthX, depthY)
+        Public Function GetIntersectionDepth(ByVal vRectangle As Rectangle) As Vector2D
+            Dim lHalfWidthA As Single = Me.Width / 2.0F
+            Dim lHalfHeightA As Single = Me.Height / 2.0F
+            Dim lHalfWidthB As Single = vRectangle.Width / 2.0F
+            Dim lHalfHeightB As Single = vRectangle.Height / 2.0F
+            Dim lCenterA As Vector2D = New Vector2D(Me.Left + lHalfWidthA, Me.Top + lHalfHeightA)
+            Dim lCenterB As Vector2D = New Vector2D(vRectangle.Left + lHalfWidthB, vRectangle.Top + lHalfHeightB)
+            Dim lDistanceX As Single = lCenterA.X - lCenterB.X
+            Dim lDistanceY As Single = lCenterA.Y - lCenterB.Y
+            Dim lMinDistanceX As Single = lHalfWidthA + lHalfWidthB
+            Dim lMinDistanceY As Single = lHalfHeightA + lHalfHeightB
+            If Math.Abs(lDistanceX) >= lMinDistanceX OrElse Math.Abs(lDistanceY) >= lMinDistanceY Then Return Vector2D.Zero
+            Dim lDepthX As Single = If(lDistanceX > 0, lMinDistanceX - lDistanceX, -lMinDistanceX - lDistanceX)
+            Dim lDepthY As Single = If(lDistanceY > 0, lMinDistanceY - lDistanceY, -lMinDistanceY - lDistanceY)
+            Return New Vector2D(lDepthX, lDepthY)
         End Function
     End Structure
 End Namespace

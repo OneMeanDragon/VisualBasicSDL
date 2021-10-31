@@ -5,7 +5,7 @@ Namespace VisualBasicSDL.Graphics
     Public Class Texture
         Implements ITexture
 
-        Private renderer As IRenderer
+        Private mRenderer As IRenderer
         Private safeHandle As SafeTextureHandle
         Public Property Width As Integer Implements ITexture.Width
         Public Property Height As Integer Implements ITexture.Height
@@ -21,41 +21,41 @@ Namespace VisualBasicSDL.Graphics
             End Set
         End Property
 
-        Friend Sub New(ByVal renderer As IRenderer, ByVal width As Integer, ByVal height As Integer, ByVal pixelFormat As PixelFormat, ByVal accessMode As TextureAccessMode)
-            If renderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(renderer))
+        Friend Sub New(ByVal vRenderer As IRenderer, ByVal vWidth As Integer, ByVal vHeight As Integer, ByVal vPixelFormat As PixelFormat, ByVal vAccessMode As TextureAccessMode)
+            If vRenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vRenderer))
             End If
 
-            If width < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(width))
+            If vWidth < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vWidth))
             End If
 
-            If height < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(height))
+            If vHeight < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vHeight))
             End If
 
-            Me.renderer = renderer
-            Dim unsafeHandle As IntPtr = CreateTexture(width, height, pixelFormat, accessMode)
+            Me.mRenderer = vRenderer
+            Dim unsafeHandle As IntPtr = CreateTexture(vWidth, vHeight, vPixelFormat, vAccessMode)
             Handle = unsafeHandle
             QueryTexture(unsafeHandle)
         End Sub
 
-        Friend Sub New(ByVal renderer As IRenderer, ByVal surface As ISurface)
-            If renderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(renderer))
+        Friend Sub New(ByVal vRenderer As IRenderer, ByVal vSurface As ISurface)
+            If vRenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vRenderer))
             End If
 
-            If surface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(surface))
+            If vSurface Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vSurface))
             End If
 
-            Me.renderer = renderer
-            CreateTextureAndCleanup(surface)
+            Me.mRenderer = vRenderer
+            CreateTextureAndCleanup(vSurface)
         End Sub
 
-        Friend Function CreateTexture(ByVal width As Integer, ByVal height As Integer, ByVal pixelFormat As PixelFormat, ByVal accessMode As TextureAccessMode) As IntPtr
-            Dim mappedPixelFormat As UInteger = PixelFormatMap.EnumToSDL(pixelFormat)
-            Dim unsafeHandle As IntPtr = SDL.SDL_CreateTexture(renderer.Handle, mappedPixelFormat, CInt(accessMode), width, height)
+        Friend Function CreateTexture(ByVal vWidth As Integer, ByVal vHeight As Integer, ByVal vPixelFormat As PixelFormat, ByVal vAccessMode As TextureAccessMode) As IntPtr
+            Dim mappedPixelFormat As UInteger = PixelFormatMap.EnumToSDL(vPixelFormat)
+            Dim unsafeHandle As IntPtr = SDL.SDL_CreateTexture(mRenderer.Handle, mappedPixelFormat, CInt(vAccessMode), vWidth, vHeight)
 
             If unsafeHandle = IntPtr.Zero Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_CreateTextureFromSurface"))
@@ -64,8 +64,8 @@ Namespace VisualBasicSDL.Graphics
             Return unsafeHandle
         End Function
 
-        Friend Function CreateTextureFromSurface(ByVal surface As ISurface) As IntPtr
-            Dim unsafeHandle As IntPtr = SDL.SDL_CreateTextureFromSurface(renderer.Handle, surface.Handle)
+        Friend Function CreateTextureFromSurface(ByVal vSurface As ISurface) As IntPtr
+            Dim unsafeHandle As IntPtr = SDL.SDL_CreateTextureFromSurface(mRenderer.Handle, vSurface.Handle)
 
             If unsafeHandle = IntPtr.Zero Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_CreateTextureFromSurface"))
@@ -74,77 +74,77 @@ Namespace VisualBasicSDL.Graphics
             Return unsafeHandle
         End Function
 
-        Private Sub QueryTexture(ByVal textureHandle As IntPtr)
-            Dim format As UInteger = Nothing, access As Integer = Nothing, width As Integer = Nothing, height As Integer = Nothing
-            SDL.SDL_QueryTexture(textureHandle, format, access, width, height)
-            PixelFormat = PixelFormatMap.SDLToEnum(format)
-            AccessMode = CType(access, TextureAccessMode)
-            width = width
-            height = height
+        Private Sub QueryTexture(ByVal vTextureHandle As IntPtr)
+            Dim lformat As UInteger = Nothing, laccess As Integer = Nothing, lwidth As Integer = Nothing, lheight As Integer = Nothing
+            SDL.SDL_QueryTexture(vTextureHandle, lformat, laccess, lwidth, lheight)
+            PixelFormat = PixelFormatMap.SDLToEnum(lformat)
+            AccessMode = CType(laccess, TextureAccessMode)
+            Width = lwidth
+            Height = lheight
         End Sub
 
-        Public Sub UpdateSurfaceAndTexture(ByVal surface As ISurface) Implements ITexture.UpdateSurfaceAndTexture
-            If surface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(surface))
+        Public Sub UpdateSurfaceAndTexture(ByVal vSurface As ISurface) Implements ITexture.UpdateSurfaceAndTexture
+            If vSurface Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vSurface))
             End If
 
             safeHandle.Dispose()
-            CreateTextureAndCleanup(surface)
+            CreateTextureAndCleanup(vSurface)
         End Sub
 
-        Private Sub CreateTextureAndCleanup(ByVal surface As ISurface)
-            Dim unsafeHandle As IntPtr = CreateTextureFromSurface(surface)
+        Private Sub CreateTextureAndCleanup(ByVal vSurface As ISurface)
+            Dim unsafeHandle As IntPtr = CreateTextureFromSurface(vSurface)
             Handle = unsafeHandle
-            surface.Dispose()
+            vSurface.Dispose()
             QueryTexture(unsafeHandle)
         End Sub
 
-        Public Sub SetBlendMode(ByVal blendMode As BlendMode) Implements ITexture.SetBlendMode
-            Dim result As Integer = SDL2.SDL.SDL_SetTextureBlendMode(Handle, CType(blendMode, SDL.SDL_BlendMode))
+        Public Sub SetBlendMode(ByVal vBlendMode As BlendMode) Implements ITexture.SetBlendMode
+            Dim lResult As Integer = SDL2.SDL.SDL_SetTextureBlendMode(Handle, CType(vBlendMode, SDL.SDL_BlendMode))
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_SetTextureBlendMode"))
             End If
         End Sub
 
-        Public Sub SetColorMod(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
-            Dim result As Integer = SDL.SDL_SetTextureColorMod(Handle, r, g, b)
+        Public Sub SetColorMod(ByVal vR As Byte, ByVal vG As Byte, ByVal vB As Byte)
+            Dim lResult As Integer = SDL.SDL_SetTextureColorMod(Handle, vR, vG, vB)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_SetTextureColorMod: {0}"))
             End If
         End Sub
 
-        Public Sub Draw(ByVal x As Integer, ByVal y As Integer, ByVal angle As Double, ByVal center As Vector2D) Implements ITexture.Draw
-            If renderer Is Nothing Then
+        Public Sub Draw(ByVal vX As Integer, ByVal vY As Integer, ByVal vAngle As Double, ByVal vCenter As Vector2D) Implements ITexture.Draw
+            If mRenderer Is Nothing Then
                 Throw New InvalidOperationException("Renderer is null. Has it been disposed?")
             End If
 
-            renderer.RenderTexture(Me, x, y, Width, Height, angle, center)
+            mRenderer.RenderTexture(Me, vX, vY, Width, Height, vAngle, vCenter)
         End Sub
 
-        Public Sub Draw(ByVal x As Integer, ByVal y As Integer, ByVal sourceBounds As Rectangle) Implements ITexture.Draw
-            If renderer Is Nothing Then
+        Public Sub Draw(ByVal vX As Integer, ByVal vY As Integer, ByVal vSourceBounds As Rectangle) Implements ITexture.Draw
+            If mRenderer Is Nothing Then
                 Throw New InvalidOperationException("Renderer is null. Has it been disposed?")
             End If
 
-            renderer.RenderTexture(Me, x, y, sourceBounds)
+            mRenderer.RenderTexture(Me, vX, vY, vSourceBounds)
         End Sub
 
-        Public Sub Draw(ByVal x As Single, ByVal y As Single, ByVal sourceBounds As Rectangle) Implements ITexture.Draw
-            Draw(CInt(x), CInt(y), sourceBounds)
+        Public Sub Draw(ByVal vX As Single, ByVal vY As Single, ByVal vSourceBounds As Rectangle) Implements ITexture.Draw
+            Draw(CInt(vX), CInt(vY), vSourceBounds)
         End Sub
 
-        Public Sub Draw(ByVal x As Integer, ByVal y As Integer) Implements ITexture.Draw
-            If renderer Is Nothing Then
+        Public Sub Draw(ByVal vX As Integer, ByVal vY As Integer) Implements ITexture.Draw
+            If mRenderer Is Nothing Then
                 Throw New InvalidOperationException("Renderer is null. Has it been disposed?")
             End If
 
-            renderer.RenderTexture(Me, x, y, Width, Height)
+            mRenderer.RenderTexture(Me, vX, vY, Width, Height)
         End Sub
 
-        Public Sub Draw(ByVal x As Single, ByVal y As Single) Implements ITexture.Draw
-            Draw(CInt(x), CInt(y))
+        Public Sub Draw(ByVal vX As Single, ByVal vY As Single) Implements ITexture.Draw
+            Draw(CInt(vX), CInt(vY))
         End Sub
 
         Public Sub Dispose() Implements ITexture.Dispose

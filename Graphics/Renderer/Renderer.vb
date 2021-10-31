@@ -35,32 +35,32 @@ Namespace VisualBasicSDL.Graphics
             End Set
         End Property
 
-        Friend Sub New(ByVal window As IWindow, ByVal Optional logger As ILogger(Of Renderer) = Nothing)
-            Me.New(window, 0, RendererFlags.None)
+        Friend Sub New(ByVal vWindow As IWindow, ByVal Optional vLogger As ILogger(Of Renderer) = Nothing)
+            Me.New(vWindow, 0, RendererFlags.None)
         End Sub
 
-        Friend Sub New(ByVal window As IWindow, ByVal index As Integer, ByVal flags As RendererFlags, ByVal Optional logger As ILogger(Of Renderer) = Nothing)
-            If window Is Nothing Then
-                Throw New ArgumentNullException(NameOf(window), "Window has not been initialized. You must first create a Window before creating a Renderer.")
+        Friend Sub New(ByVal vWindow As IWindow, ByVal vIndex As Integer, ByVal vFlags As RendererFlags, ByVal Optional logger As ILogger(Of Renderer) = Nothing)
+            If vWindow Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vWindow), "Window has not been initialized. You must first create a Window before creating a Renderer.")
             End If
 
-            If index < -1 Then
-                Throw New ArgumentOutOfRangeException(NameOf(index))
+            If vIndex < -1 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vIndex))
             End If
 
             Me.logger = logger
-            window = window
-            index = index
+            Window = vWindow
+            Index = vIndex
             Dim copyFlags As List(Of RendererFlags) = New List(Of RendererFlags)()
 
             For Each flag As RendererFlags In [Enum].GetValues(GetType(RendererFlags))
 
-                If flags.HasFlag(flag) Then
+                If vFlags.HasFlag(flag) Then
                     Me.mFlags.Add(flag)
                 End If
             Next
 
-            Dim unsafeHandle As IntPtr = SDL.SDL_CreateRenderer(window.Handle, index, CType(flags, SDL.SDL_RendererFlags))
+            Dim unsafeHandle As IntPtr = SDL.SDL_CreateRenderer(Window.Handle, Index, CType(vFlags, SDL.SDL_RendererFlags))
 
             If unsafeHandle = IntPtr.Zero Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_CreateRenderer"))
@@ -70,68 +70,69 @@ Namespace VisualBasicSDL.Graphics
         End Sub
 
         Public Sub ClearScreen() Implements IRenderer.ClearScreen
-            Dim result As Integer = SDL.SDL_RenderClear(Handle)
+            Dim lResult As Integer = SDL.SDL_RenderClear(Handle)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_RenderClear"))
             End If
         End Sub
 
-        Public Sub RenderTexture(ByVal texture As ITexture, ByVal positionX As Single, ByVal positionY As Single, ByVal sourceWidth As Integer, ByVal sourceHeight As Integer, ByVal angle As Double, ByVal center As Vector2D) Implements IRenderer.RenderTexture
-            If texture.Handle = IntPtr.Zero Then
-                Throw New ArgumentNullException(NameOf(texture.Handle))
+        Public Sub RenderTexture(ByVal vTexture As ITexture, ByVal vPositionX As Single, ByVal vPositionY As Single, ByVal vSourceWidth As Integer, ByVal vSourceHeight As Integer, ByVal vAngle As Double, ByVal vCenter As Vector2D) Implements IRenderer.RenderTexture
+            If vTexture.Handle = IntPtr.Zero Then
+                Throw New ArgumentNullException(NameOf(vTexture.Handle))
             End If
 
-            Dim destinationRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
-                .x = CInt(positionX),
-                .y = CInt(positionY),
-                .w = sourceWidth,
-                .h = sourceHeight
+            Dim lDestinationRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
+                .x = CInt(vPositionX),
+                .y = CInt(vPositionY),
+                .w = vSourceWidth,
+                .h = vSourceHeight
             }
-            Dim sourceRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
+            Dim lSourceRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
                 .x = 0,
                 .y = 0,
-                .w = sourceWidth,
-                .h = sourceHeight
+                .w = vSourceWidth,
+                .h = vSourceHeight
             }
-            Dim centerPoint As SDL.SDL_Point = New SDL.SDL_Point() With {
-                .x = CInt(center.X),
-                .y = CInt(center.Y)
+            Dim lCenterPoint As SDL.SDL_Point = New SDL.SDL_Point() With {
+                .x = CInt(vCenter.X),
+                .y = CInt(vCenter.Y)
             }
-            Dim result As Integer = SDL.SDL_RenderCopyEx(Handle, texture.Handle, sourceRectangle, destinationRectangle, angle, centerPoint, SDL.SDL_RendererFlip.SDL_FLIP_NONE)
+            Dim lResult As Integer = SDL.SDL_RenderCopyEx(Handle, vTexture.Handle, lSourceRectangle, lDestinationRectangle, vAngle, lCenterPoint, SDL.SDL_RendererFlip.SDL_FLIP_NONE)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_RenderCopyEx"))
             End If
         End Sub
 
-        Public Sub RenderTexture(ByVal texture As ITexture, ByVal positionX As Single, ByVal positionY As Single, ByVal sourceWidth As Integer, ByVal sourceHeight As Integer) Implements IRenderer.RenderTexture
-            Dim source As Rectangle = New Rectangle(0, 0, sourceWidth, sourceHeight)
-            RenderTexture(texture, positionX, positionY, source)
+        Public Sub RenderTexture(ByVal vTexture As ITexture, ByVal vPositionX As Single, ByVal vPositionY As Single, ByVal vSourceWidth As Integer, ByVal vSourceHeight As Integer) Implements IRenderer.RenderTexture
+            Dim lSource As Rectangle = New Rectangle(0, 0, vSourceWidth, vSourceHeight)
+            RenderTexture(vTexture, vPositionX, vPositionY, lSource)
         End Sub
 
-        Public Sub RenderTexture(ByVal texture As ITexture, ByVal positionX As Single, ByVal positionY As Single, ByVal source As Rectangle) Implements IRenderer.RenderTexture
-            If texture.Handle = IntPtr.Zero Then
-                Throw New ArgumentNullException(NameOf(texture.Handle))
+        Public Sub RenderTexture(ByVal vTexture As ITexture, ByVal vPositionX As Single,
+                                 ByVal vPositionY As Single, ByVal vSource As Rectangle) Implements IRenderer.RenderTexture
+            If vTexture.Handle = IntPtr.Zero Then
+                Throw New ArgumentNullException(NameOf(vTexture.Handle))
             End If
 
-            Dim width As Integer = source.Width
-            Dim height As Integer = source.Height
-            Dim destinationRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
-                .x = CInt(positionX),
-                .y = CInt(positionY),
-                .w = width,
-                .h = height
+            Dim lWidth As Integer = vSource.Width
+            Dim lHeight As Integer = vSource.Height
+            Dim lDestinationRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
+                .x = CInt(vPositionX),
+                .y = CInt(vPositionY),
+                .w = lWidth,
+                .h = lHeight
             }
-            Dim sourceRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
-                .x = source.X,
-                .y = source.Y,
-                .w = width,
-                .h = height
+            Dim lSourceRectangle As SDL.SDL_Rect = New SDL.SDL_Rect() With {
+                .x = vSource.X,
+                .y = vSource.Y,
+                .w = lWidth,
+                .h = lHeight
             }
-            Dim result As Integer = SDL.SDL_RenderCopy(Handle, texture.Handle, sourceRectangle, destinationRectangle)
+            Dim lResult As Integer = SDL.SDL_RenderCopy(Handle, vTexture.Handle, lSourceRectangle, lDestinationRectangle)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_RenderCopy"))
             End If
         End Sub
@@ -148,46 +149,47 @@ Namespace VisualBasicSDL.Graphics
             End If
         End Sub
 
-        Public Sub SetRenderTarget(ByVal renderTarget As ITexture) Implements IRenderer.SetRenderTarget
+        Public Sub SetRenderTarget(ByVal vRenderTarget As ITexture) Implements IRenderer.SetRenderTarget
             If Not mFlags.Contains(RendererFlags.SupportRenderTargets) Then
                 Throw New InvalidOperationException("This renderer does not support render targets. Did you create the renderer with the RendererFlags.SupportRenderTargets flag?")
             End If
 
-            Dim result As Integer = SDL2.SDL.SDL_SetRenderTarget(Handle, renderTarget.Handle)
+            Dim lResult As Integer = SDL2.SDL.SDL_SetRenderTarget(Handle, vRenderTarget.Handle)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_SetRenderTarget"))
             End If
         End Sub
 
-        Public Sub SetBlendMode(ByVal blendMode As BlendMode) Implements IRenderer.SetBlendMode
-            Dim result As Integer = SDL2.SDL.SDL_SetRenderDrawBlendMode(Handle, CType(blendMode, SDL2.SDL.SDL_BlendMode))
+        Public Sub SetBlendMode(ByVal vBlendMode As BlendMode) Implements IRenderer.SetBlendMode
+            Dim result As Integer = SDL2.SDL.SDL_SetRenderDrawBlendMode(Handle, CType(vBlendMode, SDL2.SDL.SDL_BlendMode))
 
             If Utilities.IsError(result) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_SetRenderDrawBlendMode"))
             End If
         End Sub
 
-        Public Sub SetDrawColor(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte, ByVal a As Byte) Implements IRenderer.SetDrawColor
-            Dim result As Integer = SDL.SDL_SetRenderDrawColor(Handle, r, g, b, a)
+        Public Sub SetDrawColor(ByVal vR As Byte, ByVal vG As Byte,
+                                ByVal vB As Byte, ByVal vA As Byte) Implements IRenderer.SetDrawColor
+            Dim lResult As Integer = SDL.SDL_SetRenderDrawColor(Handle, vR, vG, vB, vA)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_SetRenderDrawColor"))
             End If
         End Sub
 
-        Public Sub SetRenderLogicalSize(ByVal width As Integer, ByVal height As Integer) Implements IRenderer.SetRenderLogicalSize
-            If width < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(width))
+        Public Sub SetRenderLogicalSize(ByVal vWidth As Integer, ByVal vHeight As Integer) Implements IRenderer.SetRenderLogicalSize
+            If vWidth < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vWidth))
             End If
 
-            If height < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(height))
+            If vHeight < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vHeight))
             End If
 
-            Dim result As Integer = SDL2.SDL.SDL_RenderSetLogicalSize(Handle, width, height)
+            Dim lResult As Integer = SDL2.SDL.SDL_RenderSetLogicalSize(Handle, vWidth, vHeight)
 
-            If Utilities.IsError(result) Then
+            If Utilities.IsError(lResult) Then
                 Throw New InvalidOperationException(Utilities.GetErrorMessage("SDL_RenderSetLogicalSize"))
             End If
         End Sub

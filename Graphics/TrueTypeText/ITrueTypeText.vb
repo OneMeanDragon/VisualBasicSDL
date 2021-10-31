@@ -4,10 +4,10 @@ Namespace VisualBasicSDL.Graphics
     Public Interface ITrueTypeText
         Inherits IDisposable
 
-        Property Text As String
-        Property Font As IFont
-        Property Color As SDLColor
-        Property Texture As ITexture
+        Property [Text] As String
+        Property [Font] As IFont
+        Property [Color] As SDLColor
+        Property [Texture] As ITexture
         Property OutlineSize As Integer
         Property IsWrapped As Boolean
         Property WrapLength As Integer

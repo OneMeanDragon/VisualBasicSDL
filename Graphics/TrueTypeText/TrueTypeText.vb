@@ -5,10 +5,10 @@ Namespace VisualBasicSDL.Graphics
     Public Class TrueTypeText
         Implements ITrueTypeText
 
-        Public Property Text As String Implements ITrueTypeText.Text
-        Public Property Font As IFont Implements ITrueTypeText.Font
-        Public Property Color As SDLColor Implements ITrueTypeText.Color
-        Public Property Texture As ITexture Implements ITrueTypeText.Texture
+        Public Property [Text] As String Implements ITrueTypeText.Text
+        Public Property [Font] As IFont Implements ITrueTypeText.Font
+        Public Property [Color] As SDLColor Implements ITrueTypeText.Color
+        Public Property [Texture] As ITexture Implements ITrueTypeText.[Texture]
 
         Public Property OutlineSize As Integer Implements ITrueTypeText.OutlineSize
             Get
