@@ -9,14 +9,14 @@ Namespace VisualBasicSDL.Events
     Public Class TextEditingEventArgs
         Inherits GameEventArgs
 
-        Public Property Length As Integer
-        Public Property Start As Integer
-        Public Property Text As String
-        Public Property WindowID As UInt32
+        Public Property mLength As Integer
+        Public Property mStart As Integer
+        Public Property mText As String
+        Public Property mWindowID As UInt32
 
-        Public Sub New(ByVal rawEvent As SDL.SDL_Event)
-            MyBase.New(rawEvent)
-            RawTimeStamp = rawEvent.edit.timestamp
+        Public Sub New(ByVal vRawEvent As SDL.SDL_Event)
+            MyBase.New(vRawEvent)
+            mRawTimeStamp = vRawEvent.edit.timestamp
         End Sub
     End Class
 End Namespace

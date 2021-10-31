@@ -9,18 +9,18 @@ Namespace VisualBasicSDL.Events
     Public Class MouseWheelEventArgs
         Inherits GameEventArgs
 
-        Public Property WindowID As UInt32
-        Public Property MouseDeviceID As UInt32
-        Public Property HorizontalScrollAmount As Integer
-        Public Property VerticalScrollAmount As Integer
+        Public Property mWindowID As UInt32
+        Public Property mMouseDeviceID As UInt32
+        Public Property mHorizontalScrollAmount As Integer
+        Public Property mVerticalScrollAmount As Integer
 
-        Public Sub New(ByVal rawEvent As SDL.SDL_Event)
-            MyBase.New(rawEvent)
-            RawTimeStamp = rawEvent.wheel.timestamp
-            WindowID = rawEvent.wheel.windowID
-            MouseDeviceID = rawEvent.wheel.which
-            HorizontalScrollAmount = rawEvent.wheel.x
-            VerticalScrollAmount = rawEvent.wheel.y
+        Public Sub New(ByVal vRawEvent As SDL.SDL_Event)
+            MyBase.New(vRawEvent)
+            mRawTimeStamp = vRawEvent.wheel.timestamp
+            mWindowID = vRawEvent.wheel.windowID
+            mMouseDeviceID = vRawEvent.wheel.which
+            mHorizontalScrollAmount = vRawEvent.wheel.x
+            mVerticalScrollAmount = vRawEvent.wheel.y
         End Sub
     End Class
 End Namespace

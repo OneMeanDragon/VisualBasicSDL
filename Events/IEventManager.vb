@@ -27,7 +27,7 @@ Namespace VisualBasicSDL.Events
         Event WindowFocusGained As EventHandler(Of WindowEventArgs)
         Event WindowFocusLost As EventHandler(Of WindowEventArgs)
         Event WindowClosed As EventHandler(Of WindowEventArgs)
-        Sub RaiseExiting(ByVal sender As Object, ByVal args As EventArgs)
-        Sub RaiseEvents(ByVal rawEvent As SDL.SDL_Event)
+        Sub RaiseExiting(ByVal vSender As Object, ByVal vArgs As EventArgs)
+        Sub RaiseEvents(ByVal vRawEvent As SDL.SDL_Event)
     End Interface
 End Namespace

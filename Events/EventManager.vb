@@ -31,106 +31,106 @@ Namespace VisualBasicSDL.Events
         Public Event WindowFocusLost As EventHandler(Of WindowEventArgs) Implements IEventManager.WindowFocusLost
         Public Event WindowClosed As EventHandler(Of WindowEventArgs) Implements IEventManager.WindowClosed
 
-        Public Sub RaiseExiting(ByVal sender As Object, ByVal args As EventArgs) Implements IEventManager.RaiseExiting
-            RaiseEvent Exiting(sender, args)
+        Public Sub RaiseExiting(ByVal vSender As Object, ByVal vArgs As EventArgs) Implements IEventManager.RaiseExiting
+            RaiseEvent Exiting(vSender, vArgs)
         End Sub
 
-        Public Sub RaiseEvents(ByVal rawEvent As SDL.SDL_Event) Implements IEventManager.RaiseEvents
-            Dim eventType = CType(rawEvent.type, GameEventType)
-            Dim argEventData = CreateEventArgs(Of EventArgs)(rawEvent)
-            If argEventData Is Nothing Then
-                Return
-            End If
+        Public Sub RaiseEvents(ByVal vRawEvent As SDL.SDL_Event) Implements IEventManager.RaiseEvents
+            Dim eventType = CType(vRawEvent.type, GameEventType)
+            'Dim argEventData = CreateEventArgs(Of EventArgs)(vRawEvent)
+            'If argEventData Is Nothing Then
+            '    Return
+            'End If
 
             Select Case eventType
                 Case GameEventType.First
                     Return
                 Case GameEventType.Window
-                    Dim windowEventType = CType(rawEvent.window.windowEvent, WindowEventType)
+                    Dim windowEventType = CType(vRawEvent.window.windowEvent, WindowEventType)
 
                     Select Case windowEventType
                         Case WindowEventType.Close
-                            RaiseEvent WindowClosed(Me, argEventData) 'RaiseEvents(WindowClosed, rawEvent)
+                            RaiseEvent WindowClosed(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowClosed, rawEvent)
                         Case WindowEventType.Enter
-                            RaiseEvent WindowEntered(Me, argEventData) 'RaiseEvents(WindowEntered, rawEvent)
+                            RaiseEvent WindowEntered(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowEntered, rawEvent)
                         Case WindowEventType.Exposed
-                            RaiseEvent WindowExposed(Me, argEventData) 'RaiseEvents(WindowExposed, rawEvent)
+                            RaiseEvent WindowExposed(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowExposed, rawEvent)
                         Case WindowEventType.FocusGained
-                            RaiseEvent WindowFocusGained(Me, argEventData) 'RaiseEvents(WindowFocusGained, rawEvent)
+                            RaiseEvent WindowFocusGained(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowFocusGained, rawEvent)
                         Case WindowEventType.FocusLost
-                            RaiseEvent WindowFocusLost(Me, argEventData) 'RaiseEvents(WindowFocusLost, rawEvent)
+                            RaiseEvent WindowFocusLost(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowFocusLost, rawEvent)
                         Case WindowEventType.Hidden
-                            RaiseEvent WindowHidden(Me, argEventData) 'RaiseEvents(WindowHidden, rawEvent)
+                            RaiseEvent WindowHidden(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowHidden, rawEvent)
                         Case WindowEventType.Leave
-                            RaiseEvent WindowLeave(Me, argEventData) 'RaiseEvents(WindowLeave, rawEvent)
+                            RaiseEvent WindowLeave(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowLeave, rawEvent)
                         Case WindowEventType.Maximized
-                            RaiseEvent WindowMaximized(Me, argEventData) 'RaiseEvents(WindowMaximized, rawEvent)
+                            RaiseEvent WindowMaximized(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowMaximized, rawEvent)
                         Case WindowEventType.Minimized
-                            RaiseEvent WindowMinimized(Me, argEventData) 'RaiseEvents(WindowMinimized, rawEvent)
+                            RaiseEvent WindowMinimized(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowMinimized, rawEvent)
                         Case WindowEventType.Moved
-                            RaiseEvent WindowMoved(Me, argEventData) 'RaiseEvents(WindowMoved, rawEvent)
+                            RaiseEvent WindowMoved(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowMoved, rawEvent)
                         Case WindowEventType.Resized
-                            RaiseEvent WindowResized(Me, argEventData) 'RaiseEvents(WindowResized, rawEvent)
+                            RaiseEvent WindowResized(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowResized, rawEvent)
                         Case WindowEventType.Restored
-                            RaiseEvent WindowRestored(Me, argEventData) 'RaiseEvents(WindowRestored, rawEvent)
+                            RaiseEvent WindowRestored(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowRestored, rawEvent)
                         Case WindowEventType.Shown
-                            RaiseEvent WindowShown(Me, argEventData) 'RaiseEvents(WindowShown, rawEvent)
+                            RaiseEvent WindowShown(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowShown, rawEvent)
                         Case WindowEventType.SizeChanged
-                            RaiseEvent WindowSizeChanged(Me, argEventData) 'RaiseEvents(WindowSizeChanged, rawEvent)
+                            RaiseEvent WindowSizeChanged(Me, CreateEventArgs(Of WindowEventArgs)(vRawEvent)) 'RaiseEvents(WindowSizeChanged, rawEvent)
                     End Select
 
                 Case GameEventType.Quit
-                    RaiseEvent Quitting(Me, argEventData) 'RaiseEvents(Quitting, rawEvent)
+                    RaiseEvent Quitting(Me, CreateEventArgs(Of QuitEventArgs)(vRawEvent)) 'RaiseEvents(Quitting, rawEvent)
                 Case GameEventType.VideoDeviceSystemEvent
-                    RaiseEvent VideoDeviceSystemEvent(Me, argEventData) 'RaiseEvents(VideoDeviceSystemEvent, rawEvent)
+                    RaiseEvent VideoDeviceSystemEvent(Me, CreateEventArgs(Of VideoDeviceSystemEventArgs)(vRawEvent)) 'RaiseEvents(VideoDeviceSystemEvent, rawEvent)
                 Case GameEventType.TextEditing
-                    RaiseEvent TextEditing(Me, argEventData) 'RaiseEvents(TextEditing, rawEvent)
+                    RaiseEvent TextEditing(Me, CreateEventArgs(Of TextEditingEventArgs)(vRawEvent)) 'RaiseEvents(TextEditing, rawEvent)
                 Case GameEventType.TextInput
-                    RaiseEvent TextInputting(Me, argEventData) 'RaiseEvents(TextInputting, rawEvent)
+                    RaiseEvent TextInputting(Me, CreateEventArgs(Of TextInputEventArgs)(vRawEvent)) 'RaiseEvents(TextInputting, rawEvent)
                 Case GameEventType.KeyDown, GameEventType.KeyUp
-                    Dim keyState = CType(rawEvent.key.state, KeyState)
+                    Dim keyState = CType(vRawEvent.key.state, KeyState)
 
                     If keyState = KeyState.Pressed Then
-                        RaiseEvent KeyPressed(Me, argEventData) 'RaiseEvents(KeyPressed, rawEvent)
+                        RaiseEvent KeyPressed(Me, CreateEventArgs(Of KeyboardEventArgs)(vRawEvent)) 'RaiseEvents(KeyPressed, rawEvent)
                     ElseIf keyState = KeyState.Released Then
-                        RaiseEvent KeyReleased(Me, argEventData) 'RaiseEvents(KeyReleased, rawEvent)
+                        RaiseEvent KeyReleased(Me, CreateEventArgs(Of KeyboardEventArgs)(vRawEvent)) 'RaiseEvents(KeyReleased, rawEvent)
                     End If
 
                 Case GameEventType.MouseMotion
-                    Mouse.UpdateMousePosition(rawEvent.motion.x, rawEvent.motion.y)
-                    RaiseEvent MouseMoving(Me, argEventData) 'RaiseEvents(MouseMoving, rawEvent)
+                    Mouse.UpdateMousePosition(vRawEvent.motion.x, vRawEvent.motion.y)
+                    RaiseEvent MouseMoving(Me, CreateEventArgs(Of MouseMotionEventArgs)(vRawEvent)) 'RaiseEvents(MouseMoving, vRawEvent)
                 Case GameEventType.MouseButtonDown, GameEventType.MouseButtonUp
-                    Dim mouseButtonState = CType(rawEvent.button.state, MouseButtonState)
+                    Dim mouseButtonState = CType(vRawEvent.button.state, MouseButtonState)
 
                     If mouseButtonState = MouseButtonState.Pressed Then
-                        RaiseEvent MouseButtonPressed(Me, argEventData) 'RaiseEvents(MouseButtonPressed, rawEvent)
+                        RaiseEvent MouseButtonPressed(Me, CreateEventArgs(Of MouseButtonEventArgs)(vRawEvent)) 'RaiseEvents(MouseButtonPressed, rawEvent)
                     ElseIf mouseButtonState = MouseButtonState.Released Then
-                        RaiseEvent MouseButtonReleased(Me, argEventData) 'RaiseEvents(MouseButtonReleased, rawEvent)
+                        RaiseEvent MouseButtonReleased(Me, CreateEventArgs(Of MouseButtonEventArgs)(vRawEvent)) 'RaiseEvents(MouseButtonReleased, rawEvent)
                     End If
 
                 Case GameEventType.MouseWheel
-                    RaiseEvent MouseWheelScrolling(Me, argEventData) 'RaiseEvents(MouseWheelScrolling, rawEvent)
+                    RaiseEvent MouseWheelScrolling(Me, CreateEventArgs(Of MouseWheelEventArgs)(vRawEvent)) 'RaiseEvents(MouseWheelScrolling, rawEvent)
             End Select
         End Sub
 
-        Private Sub RaiseEvents(Of T As EventArgs)(ByVal vEventHandler As EventHandler(Of T), ByVal rawEvent As SDL.SDL_Event)
-            Dim eventArgs = CreateEventArgs(Of T)(rawEvent)
-            RaiseEvents(vEventHandler, eventArgs)
+        Private Sub RaiseEvents(Of T As EventArgs)(ByVal vEventHandler As EventHandler(Of T), ByVal vRawEvent As SDL.SDL_Event)
+            Dim locEventArgs = CreateEventArgs(Of T)(vRawEvent)
+            RaiseEvents(vEventHandler, locEventArgs)
         End Sub
 
-        Private Sub RaiseEvents(Of T As EventArgs)(ByVal vEventHandler As EventHandler(Of T), ByVal eventArgs As T)
+        Private Sub RaiseEvents(Of T As EventArgs)(ByVal vEventHandler As EventHandler(Of T), ByVal vEventArgs As T)
             If vEventHandler IsNot Nothing Then
-                'RaiseEvent vEventHandler(Me, eventArgs)
-                vEventHandler(Me, eventArgs)
+                'RaiseEvent vEventHandler(Me, vEventArgs)
+                vEventHandler(Me, vEventArgs)
             End If
         End Sub
 
-        Private Shared Function CreateEventArgs(Of T As Class)(ByVal rawEvent As SDL.SDL_Event) As T
+        Private Shared Function CreateEventArgs(Of T As Class)(ByVal vRawEvent As SDL.SDL_Event) As T
             Try
-                Return Activator.CreateInstance(GetType(T), New Object() {rawEvent}) 'TryCast(Activator.CreateInstance(GetType(T), New Object() {rawEvent}), T)
+                Return TryCast(Activator.CreateInstance(GetType(T), New Object() {vRawEvent}), T)
             Catch ex As Exception
                 ' Failed
-                Return Nothing
+                Return Nothing 'If it gets here we havent fixed the problem
             End Try
         End Function
     End Class

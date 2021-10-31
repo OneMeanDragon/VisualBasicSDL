@@ -7,14 +7,14 @@ Imports System.Threading.Tasks
 
 Namespace VisualBasicSDL.Input
     Public Class KeyInformation
-        Public Property PhysicalKey As PhysicalKeyCode
-        Public Property VirtualKey As VirtualKeyCode
-        Public Property Modifier As KeyModifier
+        Public Property mPhysicalKey As PhysicalKeyCode
+        Public Property mVirtualKey As VirtualKeyCode
+        Public Property mModifier As KeyModifier
 
-        Public Sub New(ByVal physicalKey As SDL.SDL_Scancode, ByVal virtualKey As SDL.SDL_Keycode, ByVal modifier As SDL.SDL_Keymod)
-            physicalKey = CType(physicalKey, PhysicalKeyCode)
-            virtualKey = CType(virtualKey, VirtualKeyCode)
-            modifier = CType(modifier, KeyModifier)
+        Public Sub New(ByVal vPhysicalKey As SDL.SDL_Scancode, ByVal vVirtualKey As SDL.SDL_Keycode, ByVal vModifier As SDL.SDL_Keymod)
+            mPhysicalKey = CType(vPhysicalKey, PhysicalKeyCode)
+            mVirtualKey = CType(vVirtualKey, VirtualKeyCode)
+            mModifier = CType(vModifier, KeyModifier)
         End Sub
     End Class
 End Namespace

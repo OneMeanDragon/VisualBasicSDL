@@ -10,22 +10,22 @@ Namespace VisualBasicSDL.Events
     Public Class MouseButtonEventArgs
         Inherits GameEventArgs
 
-        Public Property WindowID As UInt32
-        Public Property MouseDeviceID As UInt32
-        Public Property MouseButton As MouseButtonCode
-        Public Property State As MouseButtonState
-        Public Property RelativeToWindowX As Integer
-        Public Property RelativeToWindowY As Integer
+        Public Property mWindowID As UInt32
+        Public Property mMouseDeviceID As UInt32
+        Public Property mMouseButton As MouseButtonCode
+        Public Property mState As MouseButtonState
+        Public Property mRelativeToWindowX As Integer
+        Public Property mRelativeToWindowY As Integer
 
-        Public Sub New(ByVal rawEvent As SDL.SDL_Event)
-            MyBase.New(rawEvent)
-            RawTimeStamp = rawEvent.button.timestamp
-            WindowID = rawEvent.button.windowID
-            MouseDeviceID = rawEvent.button.which
-            MouseButton = CType(rawEvent.button.button, MouseButtonCode)
-            State = CType(rawEvent.button.state, MouseButtonState)
-            RelativeToWindowX = rawEvent.button.x
-            RelativeToWindowY = rawEvent.button.y
+        Public Sub New(ByVal vRawEvent As SDL.SDL_Event)
+            MyBase.New(vRawEvent)
+            mRawTimeStamp = vRawEvent.button.timestamp
+            mWindowID = vRawEvent.button.windowID
+            mMouseDeviceID = vRawEvent.button.which
+            mMouseButton = CType(vRawEvent.button.button, MouseButtonCode)
+            mState = CType(vRawEvent.button.state, MouseButtonState)
+            mRelativeToWindowX = vRawEvent.button.x
+            mRelativeToWindowY = vRawEvent.button.y
         End Sub
     End Class
 End Namespace

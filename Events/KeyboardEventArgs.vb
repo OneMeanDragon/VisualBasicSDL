@@ -15,15 +15,15 @@ Namespace VisualBasicSDL.Events
     Public Class KeyboardEventArgs
         Inherits GameEventArgs
 
-        Private repeat As Byte
-        Public Property KeyInformation As KeyInformation
-        Public Property State As KeyState
-        Public Property WindowID As UInt32
+        Private mRepeat As Byte
+        Public Property mKeyInformation As KeyInformation
+        Public Property mState As KeyState
+        Public Property mWindowID As UInt32
 
         Public ReadOnly Property IsRepeat As Boolean
             Get
 
-                If repeat <> 0 Then
+                If mRepeat <> 0 Then
                     Return True
                 Else
                     Return False
@@ -31,13 +31,13 @@ Namespace VisualBasicSDL.Events
             End Get
         End Property
 
-        Public Sub New(ByVal rawEvent As SDL.SDL_Event)
-            MyBase.New(rawEvent)
-            RawTimeStamp = rawEvent.key.timestamp
-            repeat = rawEvent.key.repeat
-            KeyInformation = New KeyInformation(rawEvent.key.keysym.scancode, rawEvent.key.keysym.sym, rawEvent.key.keysym.[mod])
-            State = CType(rawEvent.key.state, KeyState)
-            WindowID = rawEvent.key.windowID
+        Public Sub New(ByVal vRawEvent As SDL.SDL_Event)
+            MyBase.New(vRawEvent)
+            mRawTimeStamp = vRawEvent.key.timestamp
+            mRepeat = vRawEvent.key.repeat
+            mKeyInformation = New KeyInformation(vRawEvent.key.keysym.scancode, vRawEvent.key.keysym.sym, vRawEvent.key.keysym.[mod])
+            mState = CType(vRawEvent.key.state, KeyState)
+            mWindowID = vRawEvent.key.windowID
         End Sub
     End Class
 End Namespace

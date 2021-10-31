@@ -9,14 +9,14 @@ Namespace VisualBasicSDL
     Public NotInheritable Class GameEngine
         Implements IGameEngine
 
-        Private Const fixedFramesPerSecond As Single = 60.0F
-        Private isFrameRateCapped As Boolean = True
-        Private ReadOnly logger As ILogger(Of GameEngine)
-        Private ReadOnly gameTime As GameTime = New GameTime()
-        Private ReadOnly gameTimer As Timer = New Timer()
-        Private ReadOnly targetElapsedTime As TimeSpan = TimeSpan.FromSeconds(1 / fixedFramesPerSecond)
-        Private ReadOnly maxElapsedTime As TimeSpan = TimeSpan.FromSeconds(0.5)
-        Private accumulatedElapsedTime As TimeSpan = TimeSpan.Zero
+        Private Const mFixedFramesPerSecond As Single = 120.0F
+        Private mIsFrameRateCapped As Boolean = True
+        Private ReadOnly mLogger As ILogger(Of GameEngine)
+        Private ReadOnly mGameTime As GameTime = New GameTime()
+        Private ReadOnly mGameTimer As Timer = New Timer()
+        Private ReadOnly mTargetElapsedTime As TimeSpan = TimeSpan.FromSeconds(1 / mFixedFramesPerSecond)
+        Private ReadOnly mMaxElapsedTime As TimeSpan = TimeSpan.FromSeconds(0.5)
+        Private mAccumulatedElapsedTime As TimeSpan = TimeSpan.Zero
         Public Property WindowFactory As IWindowFactory Implements IGameEngine.WindowFactory
         Public Property RendererFactory As IRendererFactory Implements IGameEngine.RendererFactory
         Public Property TextureFactory As ITextureFactory Implements IGameEngine.TextureFactory
@@ -39,7 +39,7 @@ Namespace VisualBasicSDL
                 SurfaceFactory = vSurfaceFactory
                 EventManager = vEventManager
                 TrueTypeTextFactory = vTrueTypeTextFactory
-                Me.logger = vLogger
+                mLogger = vLogger
                 AddHandler EventManager.WindowClosed, AddressOf OnExiting
                 AddHandler EventManager.Quitting, AddressOf OnExiting
             Catch ex As Exception
@@ -59,7 +59,7 @@ Namespace VisualBasicSDL
                 Dim rawEvent As SDL.SDL_Event = New SDL.SDL_Event()
 
                 While SDL.SDL_PollEvent(rawEvent) = 1
-                    logger?.LogTrace($"SDL_Event: {rawEvent.type.ToString()}")
+                    mLogger.LogTrace($"SDL_Event: {rawEvent.type.ToString()}")
                     EventManager.RaiseEvents(rawEvent)
                 End While
 
@@ -71,37 +71,37 @@ Namespace VisualBasicSDL
         End Sub
 
         Private Sub Tick()
-            While isFrameRateCapped AndAlso (accumulatedElapsedTime < targetElapsedTime)
-                accumulatedElapsedTime += gameTimer.ElapsedTime
-                gameTimer.Start()
+            While mIsFrameRateCapped AndAlso (mAccumulatedElapsedTime < mTargetElapsedTime)
+                mAccumulatedElapsedTime += mGameTimer.ElapsedTime
+                mGameTimer.Start()
 
-                If isFrameRateCapped AndAlso (accumulatedElapsedTime < targetElapsedTime) Then
-                    Dim sleepTime As TimeSpan = targetElapsedTime - accumulatedElapsedTime
+                If mIsFrameRateCapped AndAlso (mAccumulatedElapsedTime < mTargetElapsedTime) Then
+                    Dim sleepTime As TimeSpan = mTargetElapsedTime - mAccumulatedElapsedTime
                     SDL.SDL_Delay(CUInt(sleepTime.TotalMilliseconds))
                 End If
             End While
 
-            If accumulatedElapsedTime > maxElapsedTime Then accumulatedElapsedTime = maxElapsedTime
+            If mAccumulatedElapsedTime > mMaxElapsedTime Then mAccumulatedElapsedTime = mMaxElapsedTime
 
-            If isFrameRateCapped Then
+            If mIsFrameRateCapped Then
                 Dim stepCount As Integer = 0
 
-                While accumulatedElapsedTime >= targetElapsedTime
-                    gameTime.TotalGameTime += targetElapsedTime
-                    accumulatedElapsedTime -= targetElapsedTime
+                While mAccumulatedElapsedTime >= mTargetElapsedTime
+                    mGameTime.TotalGameTime += mTargetElapsedTime
+                    mAccumulatedElapsedTime -= mTargetElapsedTime
                     stepCount += 1
-                    PerformUpdate(gameTime)
+                    PerformUpdate(mGameTime)
                 End While
 
-                gameTime.ElapsedGameTime = TimeSpan.FromTicks(targetElapsedTime.Ticks * stepCount)
+                mGameTime.ElapsedGameTime = TimeSpan.FromTicks(mTargetElapsedTime.Ticks * stepCount)
             Else
-                gameTime.ElapsedGameTime = accumulatedElapsedTime
-                gameTime.TotalGameTime += targetElapsedTime
-                accumulatedElapsedTime = TimeSpan.Zero
-                PerformUpdate(gameTime)
+                mGameTime.ElapsedGameTime = mAccumulatedElapsedTime
+                mGameTime.TotalGameTime += mTargetElapsedTime
+                mAccumulatedElapsedTime = TimeSpan.Zero
+                PerformUpdate(mGameTime)
             End If
 
-            PerformDraw(gameTime)
+            PerformDraw(mGameTime)
         End Sub
 
         Public Sub [End]() Implements IGameEngine.End
