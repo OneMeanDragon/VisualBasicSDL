@@ -5,13 +5,13 @@ Namespace VisualBasicSDL.Graphics
 
     Friend Class SafeSurfaceHandle : Inherits SafeHandleZeroOrMinusOneIsInvalid
 
-        Public Sub New(handle As IntPtr)
+        Public Sub New(vHandle As IntPtr)
             MyBase.New(True)
-            SetHandle(handle)
+            SetHandle(vHandle)
         End Sub
 
         Protected Overrides Function ReleaseHandle() As Boolean
-            SDL.SDL_FreeSurface(handle)
+            SDL.SDL_FreeSurface(MyBase.handle)
             Return True
         End Function
 

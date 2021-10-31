@@ -5,13 +5,13 @@ Namespace VisualBasicSDL.Graphics
     Friend Class SafeTextureHandle
         Inherits SafeHandleZeroOrMinusOneIsInvalid
 
-        Public Sub New(ByVal handle As IntPtr)
+        Public Sub New(ByVal vHandle As IntPtr)
             MyBase.New(True)
-            SetHandle(handle)
+            SetHandle(vHandle)
         End Sub
 
         Protected Overrides Function ReleaseHandle() As Boolean
-            SDL.SDL_DestroyTexture(handle)
+            SDL.SDL_DestroyTexture(MyBase.handle)
             Return True
         End Function
     End Class

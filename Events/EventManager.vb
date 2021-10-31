@@ -126,12 +126,7 @@ Namespace VisualBasicSDL.Events
         End Sub
 
         Private Shared Function CreateEventArgs(Of T As Class)(ByVal vRawEvent As SDL.SDL_Event) As T
-            Try
-                Return TryCast(Activator.CreateInstance(GetType(T), New Object() {vRawEvent}), T)
-            Catch ex As Exception
-                ' Failed
-                Return Nothing 'If it gets here we havent fixed the problem
-            End Try
+            Return TryCast(Activator.CreateInstance(GetType(T), New Object() {vRawEvent}), T)
         End Function
     End Class
 End Namespace

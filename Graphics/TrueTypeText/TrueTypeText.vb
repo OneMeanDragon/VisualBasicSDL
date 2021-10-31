@@ -6,51 +6,51 @@ Namespace VisualBasicSDL.Graphics
         Implements ITrueTypeText
 
         Public Property [Text] As String Implements ITrueTypeText.Text
-        Public Property [Font] As IFont Implements ITrueTypeText.Font
+        Public Property [Font] As IFont Implements ITrueTypeText.[Font]
         Public Property [Color] As SDLColor Implements ITrueTypeText.Color
         Public Property [Texture] As ITexture Implements ITrueTypeText.[Texture]
 
         Public Property OutlineSize As Integer Implements ITrueTypeText.OutlineSize
             Get
-                Return Font.OutlineSize
+                Return [Font].OutlineSize
             End Get
             Private Set(value As Integer)
-                Font.OutlineSize = value
+                [Font].OutlineSize = value
             End Set
         End Property
 
         Public Property IsWrapped As Boolean Implements ITrueTypeText.IsWrapped
         Public Property WrapLength As Integer Implements ITrueTypeText.WrapLength
 
-        Public Sub New(ByVal vrenderer As IRenderer, ByVal vsurface As ISurface,
-                       ByVal vtext As String, ByVal vfont As Font,
-                       ByVal vcolor As SDLColor, ByVal vwrapLength As Integer)
-            If vrenderer Is Nothing Then
-                Throw New ArgumentNullException(NameOf(vrenderer))
+        Public Sub New(ByVal vRenderer As IRenderer, ByVal vSurface As ISurface,
+                       ByVal vText As String, ByVal vFont As Font,
+                       ByVal vColor As SDLColor, ByVal vWrapLength As Integer)
+            If vRenderer Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vRenderer))
             End If
 
-            If vsurface Is Nothing Then
-                Throw New ArgumentNullException(NameOf(vsurface))
+            If vSurface Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vSurface))
             End If
 
-            If vtext Is Nothing Then
-                Throw New ArgumentNullException(NameOf(vtext))
+            If vText Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vText))
             End If
 
-            If vfont Is Nothing Then
-                Throw New ArgumentNullException(NameOf(vfont))
+            If vFont Is Nothing Then
+                Throw New ArgumentNullException(NameOf(vFont))
             End If
 
-            If vwrapLength < 0 Then
-                Throw New ArgumentOutOfRangeException(NameOf(vwrapLength), "Wrap length must be greater than or equal to 0.")
+            If vWrapLength < 0 Then
+                Throw New ArgumentOutOfRangeException(NameOf(vWrapLength), "Wrap length must be greater than or equal to 0.")
             End If
 
-            Texture = New Texture(vrenderer, vsurface)
-            IsWrapped = vwrapLength > 0
-            Text = vtext
-            Font = vfont
-            Color = vcolor
-            WrapLength = vwrapLength
+            [Texture] = New Texture(vRenderer, vSurface)
+            IsWrapped = vWrapLength > 0
+            [Text] = vText
+            [Font] = vFont
+            [Color] = vColor
+            WrapLength = vWrapLength
         End Sub
 
         Public Sub UpdateText(ByVal vtext As String) Implements ITrueTypeText.UpdateText
@@ -62,14 +62,14 @@ Namespace VisualBasicSDL.Graphics
                 Throw New InvalidOperationException("Texture is null. Has it been disposed?")
             End If
 
-            Dim surface As ISurface = New Surface(Font, vtext, Color, vwrapLength)
+            Dim surface As ISurface = New Surface([Font], vtext, Color, vwrapLength)
             Texture.UpdateSurfaceAndTexture(surface)
             Text = vtext
             IsWrapped = vwrapLength > 0
         End Sub
 
         Public Sub SetOutlineSize(ByVal outlineSize As Integer) Implements ITrueTypeText.SetOutlineSize
-            If Font Is Nothing Then
+            If [Font] Is Nothing Then
                 Throw New InvalidOperationException("Font is null.")
             End If
 
@@ -77,7 +77,7 @@ Namespace VisualBasicSDL.Graphics
                 Throw New ArgumentOutOfRangeException(NameOf(outlineSize), "Outline size must be greater than or equal to 0.")
             End If
 
-            Font.SetOutlineSize(outlineSize)
+            [Font].SetOutlineSize(outlineSize)
         End Sub
 
         Public Sub Dispose() Implements ITrueTypeText.Dispose
@@ -92,8 +92,8 @@ Namespace VisualBasicSDL.Graphics
                     Texture.Dispose()
                 End If
 
-                If Font IsNot Nothing Then
-                    Font.Dispose()
+                If [Font] IsNot Nothing Then
+                    [Font].Dispose()
                 End If
             End If
         End Sub

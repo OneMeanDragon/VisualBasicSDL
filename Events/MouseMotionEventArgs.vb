@@ -12,7 +12,7 @@ Namespace VisualBasicSDL.Events
 
         Public Property mWindowID As UInt32
         Public Property mMouseDeviceID As UInt32
-        Public Property mMouseButtonsPressed As IEnumerable(Of MouseButtonCode)
+        Public ReadOnly Property mMouseButtonsPressed As IEnumerable(Of MouseButtonCode)
         Public Property mRelativeToWindowX As Integer
         Public Property mRelativeToWindowY As Integer
         Public Property mRelativeToLastMotionEventX As Integer
@@ -34,6 +34,7 @@ Namespace VisualBasicSDL.Events
             If SDL.SDL_BUTTON(vRawEvent.motion.state) = SDL.SDL_BUTTON_X1 Then buttonsPressed.Add(MouseButtonCode.X1)
             If SDL.SDL_BUTTON(vRawEvent.motion.state) = SDL.SDL_BUTTON_X2 Then buttonsPressed.Add(MouseButtonCode.X2)
             mMouseButtonsPressed = buttonsPressed
+            'mMouseButtonsPressed.Count
         End Sub
     End Class
 End Namespace

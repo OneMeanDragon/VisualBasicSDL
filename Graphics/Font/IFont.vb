@@ -1,7 +1,9 @@
 ﻿
 Namespace VisualBasicSDL.Graphics
 
-    Public Interface IFont : Inherits IDisposable
+    Public Interface IFont
+        Inherits IDisposable
+
         Property FilePath As String
         Property PointSize As Integer
         Property Handle As IntPtr

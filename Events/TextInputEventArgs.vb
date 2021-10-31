@@ -13,6 +13,7 @@ Namespace VisualBasicSDL.Events
         Public Property mText As String
         Public Property mWindowID As UInt32
 
+        '   This has not been tested and my be the wrong way to go about doing this in VB
         Public Sub New(ByVal vRawEvent As SDL.SDL_Event)
             MyBase.New(vRawEvent)
             mRawTimeStamp = vRawEvent.text.timestamp
@@ -21,7 +22,7 @@ Namespace VisualBasicSDL.Events
 
             '// we have an unsafe pointer to a char array from SDL, explicitly marshal this to a byte array of fixed size
             'unsafe {
-            'Marshal.Copy(CType(rawEvent.text.text, IntPtr), rawBytes, 0, SDL.SDL_TEXTINPUTEVENT_TEXT_SIZE)
+            '   Marshal.Copy(CType(rawEvent.text.text, IntPtr), rawBytes, 0, SDL.SDL_TEXTINPUTEVENT_TEXT_SIZE)
             '}
             ''' 
             Dim gh As GCHandle = GCHandle.Alloc(vRawEvent.text.text, GCHandleType.Pinned)

@@ -6,16 +6,16 @@ Namespace VisualBasicSDL.Graphics
 
         Private ReadOnly logger As ILogger(Of TrueTypeTextFactory)
 
-        Public Sub New(ByVal logger As ILogger(Of TrueTypeTextFactory))
-            Me.logger = logger
+        Public Sub New(ByVal vLogger As ILogger(Of TrueTypeTextFactory))
+            Me.logger = vLogger
         End Sub
 
-        Public Function CreateTrueTypeText(ByVal renderer As IRenderer, ByVal fontPath As String, ByVal text As String, ByVal fontSize As Integer) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
-            Return CreateTrueTypeText(renderer, fontPath, text, fontSize, Colors.Black, 0)
+        Public Function CreateTrueTypeText(ByVal vRenderer As IRenderer, ByVal vFontPath As String, ByVal vText As String, ByVal vFontSize As Integer) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
+            Return CreateTrueTypeText(vRenderer, vFontPath, vText, vFontSize, Colors.Black, 0)
         End Function
 
-        Public Function CreateTrueTypeText(ByVal renderer As IRenderer, ByVal fontPath As String, ByVal text As String, ByVal fontSize As Integer, ByVal color As SDLColor) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
-            Return CreateTrueTypeText(renderer, fontPath, text, fontSize, color, 0)
+        Public Function CreateTrueTypeText(ByVal vRenderer As IRenderer, ByVal vFontPath As String, ByVal vText As String, ByVal vFontSize As Integer, ByVal vColor As SDLColor) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
+            Return CreateTrueTypeText(vRenderer, vFontPath, vText, vFontSize, vColor, 0)
         End Function
 
         Public Function CreateTrueTypeText(ByVal vRenderer As IRenderer, ByVal vFontPath As String, ByVal vText As String, ByVal vFontSize As Integer, ByVal vColor As SDLColor, ByVal vWrapLength As Integer) As ITrueTypeText Implements ITrueTypeTextFactory.CreateTrueTypeText
