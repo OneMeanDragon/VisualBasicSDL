@@ -71,6 +71,10 @@ Namespace EX_BlankWindow
         Private mFPSCounter As New FPSCounter
         Private MouseCoords As TrueTypeText
 
+        ' Textures
+        Private mImageSig As Texture
+        Private mImageIcon As Texture
+        Private mImageIcon2 As Texture
 
         Public Sub New(vEngine As IGameEngine, Optional vLogger As ILogger(Of MainGame) = Nothing)
             Me.mEngine = vEngine
@@ -94,6 +98,15 @@ Namespace EX_BlankWindow
             mRenderer.SetRenderLogicalSize(1280, 720)
             mRenderer.SetDrawColor(37, 37, 117, 255)
 
+            ' Textures
+            Dim surImageSig As Surface = New Surface("Content/ImageOfSig.bmp", SurfaceType.BMP)
+            Dim SurImageIcon As Surface = New Surface("Content/botnet.png", SurfaceType.PNG)
+            Dim SurImageIcon2 As Surface = New Surface("Content/plug.bmp", SurfaceType.BMP)
+            ' Creates a GPU-driven SDL texture using the initialized renderer and created surface
+            mImageSig = New Texture(mRenderer, surImageSig)
+            mImageIcon = New Texture(mRenderer, SurImageIcon)
+            mImageIcon2 = New Texture(mRenderer, SurImageIcon2)
+
             ' Set FPS Font file etc
             FPSText = mEngine.TrueTypeTextFactory.CreateTrueTypeText(mRenderer, "Content/z3.ttf", "FPS: 0", 20, Colors.White, 0)
             MouseCoords = mEngine.TrueTypeTextFactory.CreateTrueTypeText(mRenderer, "Content/z3.ttf", "MouseCoords X: 0, Y: 0", 20, Colors.White, 0)
@@ -109,7 +122,15 @@ Namespace EX_BlankWindow
             AddHandler mEngine.EventManager.MouseWheelScrolling, AddressOf MouseWheelScrolling
             AddHandler mEngine.EventManager.MouseMoving, AddressOf MouseMoving
 
+            ' Window events
+            'AddHandler mEngine.EventManager.WindowEverythingElse, AddressOf WindowEverythingElse
+
         End Sub
+
+        ' Window Events
+        'Public Sub WindowEverythingElse(ByVal sender As Object, ByVal EventArgs As WindowEventArgs)
+        '    mLogger.LogTrace($"WindowEverythingElse event: WindowID = {EventArgs.mWindowID}.")
+        'End Sub
 
         ' Mouse Events
         Public Sub MouseButtonPressed(ByVal sender As Object, ByVal EventArgs As MouseButtonEventArgs)
@@ -145,12 +166,20 @@ Namespace EX_BlankWindow
 
         Private Sub Update(vGameTime As GameTime)
             '
+
+            FPSText.UpdateText("FPS: " & mFPSCounter.CurrentFPS)
+
         End Sub
 
         Private Sub Draw(vGameTime As GameTime)
             mRenderer.ClearScreen()
 
-            FPSText.UpdateText("FPS: " & mFPSCounter.CurrentFPS)
+            mImageSig.Draw(0, mImageSig.Width, -45, New Vector2D(mImageSig.Width / 2, mImageSig.Height / 2))
+            mImageSig.Draw(300, 300, 45, New Vector2D(mImageSig.Width / 2, mImageSig.Height / 2))
+            mImageIcon.Draw(700, 400)
+            mImageIcon2.Draw(800, 600, New Rectangle(0, 0, 50, 50))
+
+            'FPSText.UpdateText("FPS: " & mFPSCounter.CurrentFPS)
             FPSText.Texture.Draw(3, 1)
             MouseCoords.Texture.Draw(3, FPSText.Texture.Height + 2)
 
@@ -159,6 +188,11 @@ Namespace EX_BlankWindow
         End Sub
 
         Private Sub UnloadContent()
+            mImageSig.Dispose()
+            mImageIcon.Dispose()
+            mImageIcon2.Dispose()
+
+
             FPSText.Dispose()
             MouseCoords.Dispose()
         End Sub
